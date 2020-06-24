@@ -27,7 +27,6 @@ let entities folderPath =
 [<EntryPoint>]
 let main argv =
     entities argv.[0]
-    |> Seq.toList
     |> List.map (printfn "%A")
     |> ignore
 
