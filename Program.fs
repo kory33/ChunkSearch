@@ -1,6 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
+﻿open System
 open SilverNBTLibrary
 open SilverNBTLibrary.World
 
@@ -12,6 +10,23 @@ type TileEntityId = TileEntityId of string
 
 type TileEntity = TileEntity of XYZTuple * DimId * TileEntityId
 
+let entities folderPath =
+    use world = World.FromDirectory(folderPath)
+    printfn "loaded world"
+
+    [
+        for dim in world.Worlds do
+            let dimId = DimId dim.DimensionID
+            printfn "searching for %d" (match dimId with DimId(i) -> i)
+            for tileEntity in dim.GetAllTileEntities() do
+                let tileEntityId = TileEntityId tileEntity.Id
+                let coordinate = XYZTuple(tileEntity.XCoord, tileEntity.YCoord, tileEntity.ZCoord)
+
+                let nbt = tileEntity.NBTData
+                if nbt.ContainsKey "Items" || nbt.ContainsKey "RecordItem" then
+                    TileEntity(coordinate, dimId, tileEntityId)
+    ]
+
 [<EntryPoint>]
 let main _ =
     printfn "ワールドのフォルダのパスを入力して下さい"
@@ -22,22 +37,9 @@ let main _ =
     printfn "ワールドの読み込みを開始します"
     printfn ""
 
-    let entities =
-        use world = World.FromDirectory(folderPath)
-
-        seq {
-            for dim in world.Worlds do
-                let dimId = DimId dim.DimensionID
-                for tileEntity in dim.GetAllTileEntities() do
-                    let tileEntityId = TileEntityId tileEntity.Id
-                    let coordinate = XYZTuple(tileEntity.XCoord, tileEntity.YCoord, tileEntity.ZCoord)
-
-                    let nbt = tileEntity.NBTData
-                    if nbt.ContainsKey "Items" || nbt.ContainsKey "RecordItem" then
-                        yield TileEntity(coordinate, dimId, tileEntityId)
-        }
-
-    entities
-    |> Seq.map (printf "%A")
+    entities folderPath
+    |> Seq.toList
+    |> List.map (printfn "%A")
     |> ignore
+
     0
