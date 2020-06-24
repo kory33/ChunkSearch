@@ -1,33 +1,37 @@
-﻿open SilverNBTLibrary
+﻿open Froto.Serialization
+open SilverNBTLibrary
 open SilverNBTLibrary.World
 
-type XYZTuple = XYZTuple of int * int * int
-
-type DimId = DimId of int
-
-type TileEntityId = TileEntityId of string
-
-type TileEntity = TileEntity of XYZTuple * DimId * TileEntityId
+open InventorySearch
 
 let entities folderPath =
     use world = World.FromDirectory(folderPath)
 
-    [
+    let result = ResizeArray (seq {
         for dim in world.Worlds do
-            let dimId = DimId dim.DimensionID
             for tileEntity in dim.GetAllTileEntities() do
-                let tileEntityId = TileEntityId tileEntity.Id
-                let coordinate = XYZTuple(tileEntity.XCoord, tileEntity.YCoord, tileEntity.ZCoord)
+                let coordinate =
+                    { x = Some tileEntity.XCoord
+                      y = Some tileEntity.YCoord
+                      z = Some tileEntity.ZCoord }
 
                 let nbt = tileEntity.NBTData
                 if nbt.ContainsKey "Items" || nbt.ContainsKey "RecordItem" then
-                    TileEntity(coordinate, dimId, tileEntityId)
-    ]
+                    let record =
+                        { coord = Some coordinate
+                          dimensionId = Some dim.DimensionID
+                          tileEntityId = Some tileEntity.Id }
+                    yield record
+    })
+    
+    { result = result }
+
+open Falanx.Proto.Codec.Binary.Primitives
 
 [<EntryPoint>]
 let main argv =
-    entities argv.[0]
-    |> List.map (printfn "%A")
-    |> ignore
-
+    let result = entities argv.[0]
+    let buffer = ZeroCopyBuffer(int (serializedLength result))
+    SearchResult.Serialize (result, buffer)
+    printfn "%A" buffer.ToString
     0
