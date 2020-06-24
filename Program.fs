@@ -33,5 +33,5 @@ let main argv =
     let result = entities argv.[0]
     let buffer = ZeroCopyBuffer(int (serializedLength result))
     SearchResult.Serialize (result, buffer)
-    printfn "%A" buffer.ToString
+    printf "%s" (System.Text.Encoding.ASCII.GetString buffer.Array)
     0
