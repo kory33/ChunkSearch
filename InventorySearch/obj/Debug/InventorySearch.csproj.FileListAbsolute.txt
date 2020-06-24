@@ -1,8 +1,0 @@
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\bin\Debug\InventorySearch.exe.config
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\bin\Debug\InventorySearch.exe
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\bin\Debug\InventorySearch.pdb
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\bin\Debug\SilverNBTLibrary.dll
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\obj\Debug\InventorySearch.csprojAssemblyReference.cache
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\obj\Debug\InventorySearch.csproj.CopyComplete
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\obj\Debug\InventorySearch.exe
-C:\Users\Haru\Documents\GitHub\InventorySearch\InventorySearch\obj\Debug\InventorySearch.pdb
