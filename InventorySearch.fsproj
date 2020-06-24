@@ -6,11 +6,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProtoFile Include="protocol/inventory-search.proto">
+            <OutputPath>generated/InventorySearch.fs</OutputPath>
+        </ProtoFile>
         <Compile Include="Program.fs" />
         <Content Include="README.md" />
         <Reference Include="SilverNBTLibrary">
             <HintPath>lib/SilverNBTLibrary.dll</HintPath>
         </Reference>
+        <PackageReference Include="Falanx.Proto.Codec.Binary" Version="0.6.*" />
+        <PackageReference Include="Falanx.Sdk" Version="0.6.*" PrivateAssets="All" />
     </ItemGroup>
-
 </Project>
