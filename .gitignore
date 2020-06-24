@@ -1,2 +1,5 @@
 ﻿# IDEA config files
 .idea
+
+bin
+obj
