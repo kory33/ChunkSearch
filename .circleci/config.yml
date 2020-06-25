@@ -1,0 +1,21 @@
+﻿version: 2.1
+
+anchors:
+  docker:
+    dotnet_docker: &dotnet_docker
+      docker:
+        - image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+jobs:
+  build:
+    <<: *dotnet_docker
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: dotnet build
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - build

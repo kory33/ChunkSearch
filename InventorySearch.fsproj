@@ -11,6 +11,7 @@
         </ProtoFile>
         <Compile Include="Program.fs" />
         <Content Include="README.md" />
+        <Content Include=".circleci\config.yml" />
         <Reference Include="SilverNBTLibrary">
             <HintPath>lib/SilverNBTLibrary.dll</HintPath>
         </Reference>
