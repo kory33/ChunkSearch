@@ -21,8 +21,7 @@ let entities folderPath =
                         if nbt.ContainsKey "Items" || nbt.ContainsKey "RecordItem" then
                             let record =
                                 { coord = Some coordinate
-                                  dimensionId = Some dim.DimensionID
-                                  tileEntityId = Some tileEntity.Id }
+                                  dimensionId = Some dim.DimensionID }
                             yield record
              })
 
