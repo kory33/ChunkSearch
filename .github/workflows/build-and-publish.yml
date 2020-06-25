@@ -13,14 +13,21 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Get release version
-        id: get_version
-        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_SHA:0:9})
-
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - name: Publish Docker Image to GPR
+        uses: machine-learning-apps/gpr-docker-publish@master
+        id: docker
         with:
-          name: docker.pkg.github.com/GiganticMinecraft/inventory-search
-          username: GiganticMinecraft
-          password: ${{ secrets.GITHUB_TOKEN }}
-          tags: "latest,${{ env.RELEASE_VERSION }}"
+          IMAGE_NAME: 'inventory-search'
+          DOCKERFILE_PATH: './Dockerfile'
+          BUILD_CONTEXT: './'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show outputs of previous step
+        run: |
+          echo "The name:tag of the Docker Image is: $VAR1"
+          echo "The docker image is hosted at $VAR2"
+        env:
+          VAR1: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+          VAR2: ${{ steps.docker.outputs.IMAGE_URL }}
+  
