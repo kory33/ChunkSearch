@@ -11,16 +11,14 @@ let entities folderPath =
         ResizeArray
             (seq {
                 for dim in world.Worlds do
-                    for tileEntity in dim.GetAllTileEntities() do
-                        let coordinate =
-                            { x = Some tileEntity.XCoord
-                              y = Some tileEntity.YCoord
-                              z = Some tileEntity.ZCoord }
-
-                        let nbt = tileEntity.NBTData
-                        if nbt.ContainsKey "Items" || nbt.ContainsKey "RecordItem" then
+                    for chunkCoord in dim.GetAllChunkCoord(false) do
+                        let coordRecord =
+                            { x = Some chunkCoord.X
+                              z = Some chunkCoord.Z }
+                        let chunk = dim.GetChunkFromChunkCoords(chunkCoord)
+                        if chunk.HasEntities || chunk.GetTileEntities().Count <> 0 then
                             let record =
-                                { coord = Some coordinate
+                                { coord = Some coordRecord
                                   dimensionId = Some dim.DimensionID }
                             yield record
              })
