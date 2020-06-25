@@ -14,7 +14,7 @@ jobs:
           submodules: recursive
 
       - name: Build docker image
-        run: docker build -t docker.pkg.github.com/GiganticMinecraft/InventorySearch/inventory-search:${{ GITHUB_SHA }} .
+        run: docker build -t docker.pkg.github.com/GiganticMinecraft/InventorySearch/inventory-search:$GITHUB_SHA .
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
