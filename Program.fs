@@ -40,7 +40,6 @@ type SerializerMsg =
 [<EntryPoint>]
 let main argv =
     let serialized = toArray { message = entities argv.[0] }
-    let _ =
-        use stdout = Console.OpenStandardOutput()
-        stdout.Write(serialized, 0, serialized.Length)
+    use stdout = Console.OpenStandardOutput()
+    stdout.Write(serialized, 0, serialized.Length)
     0
