@@ -1,4 +1,4 @@
-﻿open Froto.Serialization
+﻿open System
 open SilverNBTLibrary
 open SilverNBTLibrary.World
 
@@ -27,12 +27,20 @@ let entities folderPath =
 
     { result = result }
 
-open Falanx.Proto.Codec.Binary.Primitives
+open Falanx.Proto.Codec.Binary
+open Froto.Serialization
+open Froto.Serialization.Serialize
+
+type SerializerMsg =
+    { message : IMessage }
+    static member Serializer(m: SerializerMsg, zcb: ZeroCopyBuffer) =
+        m.message.Serialize(zcb)
+        zcb
 
 [<EntryPoint>]
 let main argv =
-    let result = entities argv.[0]
-    let buffer = ZeroCopyBuffer(int (serializedLength result))
-    SearchResult.Serialize(result, buffer)
-    printf "%s" (System.Text.Encoding.ASCII.GetString buffer.Array)
+    let serialized = toArray { message = entities argv.[0] }
+    let _ =
+        use stdout = Console.OpenStandardOutput()
+        stdout.Write(serialized, 0, serialized.Length)
     0
