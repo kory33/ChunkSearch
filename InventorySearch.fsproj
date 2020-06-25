@@ -11,7 +11,8 @@
         </ProtoFile>
         <Compile Include="Program.fs" />
         <Content Include="README.md" />
-        <Content Include=".circleci\config.yml" />
+        <Content Include=".github\workflows\build-and-publish.yml" />
+        <Content Include="Dockerfile" />
         <Reference Include="SilverNBTLibrary">
             <HintPath>lib/SilverNBTLibrary.dll</HintPath>
         </Reference>
