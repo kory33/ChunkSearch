@@ -2,7 +2,7 @@
 open SilverNBTLibrary
 open SilverNBTLibrary.World
 
-open InventorySearch
+open ChunkSearch
 
 let entities folderPath =
     use world = World.FromDirectory(folderPath)

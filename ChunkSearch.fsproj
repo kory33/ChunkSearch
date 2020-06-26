@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProtoFile Include="protocol/inventory-search.proto">
-            <OutputPath>generated/InventorySearch.fs</OutputPath>
+        <ProtoFile Include="protocol/chunk-search.proto">
+            <OutputPath>generated/ChunkSearch.fs</OutputPath>
         </ProtoFile>
         <Compile Include="Program.fs" />
         <Content Include="README.md" />
