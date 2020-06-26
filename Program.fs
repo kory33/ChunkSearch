@@ -12,15 +12,10 @@ let entities folderPath =
             (seq {
                 for dim in world.Worlds do
                     for chunkCoord in dim.GetAllChunkCoord(false) do
-                        let coordRecord =
-                            { x = Some chunkCoord.X
-                              z = Some chunkCoord.Z }
-                        let chunk = dim.GetChunkFromChunkCoords(chunkCoord)
-                        if chunk.HasEntities || chunk.GetTileEntities().Count <> 0 then
-                            let record =
-                                { coord = Some coordRecord
-                                  dimensionId = Some dim.DimensionID }
-                            yield record
+                        let record =
+                            { coord = Some { x = Some chunkCoord.X ; z = Some chunkCoord.Z }
+                              dimensionId = Some dim.DimensionID }
+                        yield record
              })
 
     { result = result }
